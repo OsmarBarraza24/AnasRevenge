@@ -29,7 +29,7 @@ and open the template in the editor.
         <property name="hibernate.connection.password">
             perron11
         </property>
-        
+        <property name="hibernate.enable_lazy_load_no_trans"> true </property>
       <mapping class="mx.caterpillar.anasrevenge.nucleo.entidades.Alumno"/>
       <mapping class="mx.caterpillar.anasrevenge.nucleo.entidades.Clase"/>
       <mapping class="mx.caterpillar.anasrevenge.nucleo.entidades.Sesion"/>
