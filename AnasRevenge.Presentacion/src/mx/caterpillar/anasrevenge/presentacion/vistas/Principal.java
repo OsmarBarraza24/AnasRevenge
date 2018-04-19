@@ -34,6 +34,7 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     String uid = "";
+
     PanamaHitek_Arduino arduino = new PanamaHitek_Arduino();
 
     public Principal() throws ArduinoException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
@@ -46,9 +47,10 @@ public class Principal extends javax.swing.JFrame {
 
     SerialPortEventListener listener = new SerialPortEventListener() {
         public void serialEvent(SerialPortEvent spe) {
+           
             try {
                 if (arduino.isMessageAvailable()) {
-                    uid = arduino.printMessage();
+                    arduino.printMessage();
 
                 }
 
