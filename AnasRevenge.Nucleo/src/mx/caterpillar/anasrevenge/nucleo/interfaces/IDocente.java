@@ -13,9 +13,14 @@ import mx.caterpillar.anasrevenge.nucleo.entidades.Docente;
  * @author osmar
  */
 public interface IDocente {
+
     public List<Docente> getAll();
+
     public Docente getByUID(String uid);
+
     public void save(Docente docente);
+
     public void update(Docente docente);
+
     public void delete(int id);
 }

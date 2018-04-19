@@ -32,7 +32,7 @@ public class DocenteImplementacion implements IDocente{
             docentes = session.createQuery(criteria).getResultList();
             session.close();
         } catch (Exception ex) {
-            System.out.println("Ocurrió un error al intentar obtener registros de Compañía. Descripción: " + ex.getMessage());
+            System.out.println("Ocurrió un error al intentar obtener registros de docente. Descripción: " + ex.getMessage());
         }
         return docentes;
     }
@@ -61,7 +61,7 @@ public class DocenteImplementacion implements IDocente{
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo usuario");
+            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo docente");
         }
     }
 
@@ -74,7 +74,7 @@ public class DocenteImplementacion implements IDocente{
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo usuario");
+            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo docente");
         }
     }
 
@@ -89,7 +89,7 @@ public class DocenteImplementacion implements IDocente{
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo usuario");
+            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo docente");
         }
     }
     
