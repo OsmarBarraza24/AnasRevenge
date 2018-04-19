@@ -19,7 +19,7 @@ and open the template in the editor.
         </property>  
     
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost/anasrevengedb
+            jdbc:mysql://192.168.0.6/anasrevengedb
         </property>
 
         <property name="hibernate.connection.username">
