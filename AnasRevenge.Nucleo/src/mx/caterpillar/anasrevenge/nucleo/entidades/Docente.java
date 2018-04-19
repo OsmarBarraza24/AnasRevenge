@@ -5,9 +5,14 @@
  */
 package mx.caterpillar.anasrevenge.nucleo.entidades;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import mx.caterpillar.anasrevenge.nucle.enumeradores.Sexo;
 
 /**
@@ -16,6 +21,26 @@ import mx.caterpillar.anasrevenge.nucle.enumeradores.Sexo;
  */
 @Entity
 public class Docente {
+
+    /**
+     * @return the lista
+     */
+     @ManyToMany(cascade = { CascadeType.PERSIST })
+    @JoinTable(
+        name = "rel_clase_docente", 
+        joinColumns = { @JoinColumn(name = "idDocente") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idClase") }
+    )
+    public List<Clase> getLista() {
+        return lista;
+    }
+
+    /**
+     * @param lista the lista to set
+     */
+    public void setLista(List<Clase> lista) {
+        this.lista = lista;
+    }
     private int id;
     private String uid;
     private String matricula;
@@ -25,6 +50,7 @@ public class Docente {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private byte[] foto;
+    private List<Clase> lista;
 
     /**
      * @return the matricula

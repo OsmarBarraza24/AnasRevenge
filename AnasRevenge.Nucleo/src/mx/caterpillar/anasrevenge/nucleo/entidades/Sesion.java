@@ -5,8 +5,8 @@
  */
 package mx.caterpillar.anasrevenge.nucleo.entidades;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +20,26 @@ import javax.persistence.*;
  */
 @Entity
 public class Sesion {
+
+    /**
+     * @return the alumnos
+     */
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    /**
+     * @param alumnos the alumnos to set
+     */
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
     private int id;
     private Date horaEntrada;
     private Date horaSalida;
     private Docente docente;
     private Clase clase;
-    private ArrayList<Alumno> alumnos;
+    private List<Alumno> alumnos;
 
     /**
      * @return the id
@@ -106,16 +120,4 @@ public class Sesion {
     /**
      * @return the alumnos
      */
-    @ManyToMany(cascade = CascadeType.PERSIST)
-   
-    public ArrayList<Alumno> getAlumnos() {
-        return alumnos;
-    }
-
-    /**
-     * @param alumnos the alumnos to set
-     */
-    public void setAlumnos(ArrayList<Alumno> alumnos) {
-        this.alumnos = alumnos;
-    }
 }
