@@ -24,6 +24,12 @@ public class Sesion {
     /**
      * @return the alumnos
      */
+    @ManyToMany(cascade = { CascadeType.PERSIST })
+    @JoinTable(
+        name = "rel_sesion_alumno", 
+        joinColumns = { @JoinColumn(name = "idAlumno") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idSesion") }
+    )
     public List<Alumno> getAlumnos() {
         return alumnos;
     }
