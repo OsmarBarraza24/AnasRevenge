@@ -13,7 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import mx.caterpillar.anasrevenge.nucle.enumeradores.Sexo;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -21,6 +25,20 @@ import mx.caterpillar.anasrevenge.nucle.enumeradores.Sexo;
  */
 @Entity
 public class Docente {
+
+    /**
+     * @return the sexo
+     */
+    public int getSexo() {
+        return sexo;
+    }
+
+    /**
+     * @param sexo the sexo to set
+     */
+    public void setSexo(int sexo) {
+        this.sexo = sexo;
+    }
 
     /**
      * @return the lista
@@ -45,13 +63,12 @@ public class Docente {
     private String uid;
     private String matricula;
     private String nombre;
-    private String contrasenia;
-    private Sexo sexo;
+    private int sexo;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private byte[] foto;
     private List<Clase> lista;
-
+    
     /**
      * @return the matricula
      */
@@ -106,33 +123,6 @@ public class Docente {
      */
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
-    }
-
-
-
-    public Sexo getSexo() {
-        return sexo;
-    }
-
-    /**
-     * @param sexo the sexo to set
-     */
-    public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
-    }
-
-    /**
-     * @return the contrasenia
-     */
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    /**
-     * @param contrasenia the contrasenia to set
-     */
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
     }
 
     /**

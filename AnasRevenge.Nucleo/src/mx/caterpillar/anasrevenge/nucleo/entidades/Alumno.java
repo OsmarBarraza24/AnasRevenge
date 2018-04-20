@@ -20,7 +20,7 @@ public class Alumno {
     private String uid;
     private String matricula;
     private String nombre;
-    private Sexo sexo;
+    private int sexo;
     private String apellidoPaterno;
     private String appellidoMaterno;
     private String grupo;
@@ -99,14 +99,14 @@ public class Alumno {
     /**
      * @return the sexo
      */
-    public Sexo getSexo() {
+    public int getSexo() {
         return sexo;
     }
 
     /**
      * @param sexo the sexo to set
      */
-    public void setSexo(Sexo sexo) {
+    public void setSexo(int sexo) {
         this.sexo = sexo;
     }
 

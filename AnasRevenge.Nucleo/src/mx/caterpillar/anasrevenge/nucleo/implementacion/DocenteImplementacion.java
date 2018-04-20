@@ -48,6 +48,7 @@ public class DocenteImplementacion implements IDocente{
             docente = (Docente)session.createCriteria(Docente.class).add(Restrictions.eq("uid", uid)).list().get(0);
             session.close();
         } catch (Exception e) {
+            System.out.println("Pendejo");
         }
         return docente;
     }

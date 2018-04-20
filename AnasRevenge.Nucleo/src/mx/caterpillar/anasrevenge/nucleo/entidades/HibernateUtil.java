@@ -5,6 +5,7 @@
  */
 package mx.caterpillar.anasrevenge.nucleo.entidades;
 
+
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -22,6 +23,7 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
+               
                 serviceRegistry = new StandardServiceRegistryBuilder().configure().build();
                 MetadataSources metaSources = new MetadataSources(serviceRegistry);
                 Metadata metadata = metaSources.getMetadataBuilder().build();
