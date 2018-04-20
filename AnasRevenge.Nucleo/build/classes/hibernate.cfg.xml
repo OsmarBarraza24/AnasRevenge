@@ -27,6 +27,7 @@
       <mapping class="mx.caterpillar.anasrevenge.nucleo.entidades.Clase"/>
       <mapping class="mx.caterpillar.anasrevenge.nucleo.entidades.Sesion"/>
       <mapping class="mx.caterpillar.anasrevenge.nucleo.entidades.Docente"/>
+      <mapping class="mx.caterpillar.anasrevenge.nucleo.entidades.Asistencia"/>
     </session-factory>
 </hibernate-configuration>
 

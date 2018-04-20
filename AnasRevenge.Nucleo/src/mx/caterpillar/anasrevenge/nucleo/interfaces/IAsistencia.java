@@ -6,21 +6,21 @@
 package mx.caterpillar.anasrevenge.nucleo.interfaces;
 
 import java.util.List;
-import mx.caterpillar.anasrevenge.nucleo.entidades.Sesion;
+import mx.caterpillar.anasrevenge.nucleo.entidades.Asistencia;
 
 /**
  *
- * @author osmar
+ * @author jesus
  */
-public interface ISesion {
+public interface IAsistencia {
+    
+    public List<Asistencia> getAll();
 
-    public List<Sesion> getAll();
+    public Asistencia getByID(int id);
 
-    public Sesion getByID(int id);
+    public void save(Asistencia asistencia);
 
-    public void save(Sesion sesion);
-
-    public void update(Sesion sesion);
+    public void update(Asistencia asistencia);
 
     public void delete(int id);
 }

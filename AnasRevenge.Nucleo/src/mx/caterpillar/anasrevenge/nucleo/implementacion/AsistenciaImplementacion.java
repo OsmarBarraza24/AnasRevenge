@@ -10,68 +10,68 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import mx.caterpillar.anasrevenge.nucleo.entidades.Alumno;
+import mx.caterpillar.anasrevenge.nucleo.entidades.Asistencia;
 import mx.caterpillar.anasrevenge.nucleo.entidades.HibernateUtil;
-import mx.caterpillar.anasrevenge.nucleo.entidades.Sesion;
-import mx.caterpillar.anasrevenge.nucleo.interfaces.ISesion;
+import mx.caterpillar.anasrevenge.nucleo.interfaces.IAsistencia;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author osmar
+ * @author jesus
  */
-public class SesionImplementacion implements ISesion {
+public class AsistenciaImplementacion implements IAsistencia{
 
     @Override
-    public List<Sesion> getAll() {
-        List<Sesion> sesiones = new ArrayList<Sesion>();
+    public List<Asistencia> getAll() {
+        List<Asistencia> asistencia = new ArrayList<Asistencia>();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Sesion> criteria = builder.createQuery(Sesion.class);
-            criteria.from(Sesion.class);
-            sesiones = session.createQuery(criteria).getResultList();
+            CriteriaQuery<Asistencia> criteria = builder.createQuery(Asistencia.class);
+            criteria.from(Asistencia.class);
+            asistencia = session.createQuery(criteria).getResultList();
             session.close();
         } catch (Exception ex) {
             System.out.println("Ocurrió un error al intentar obtener Alumnos. Descripción: " + ex.getMessage());
         }
-        return sesiones;
+        return asistencia;
     }
 
     @Override
-    public Sesion getByID(int id) {
-        Sesion sesion = new Sesion();
+    public Asistencia getByID(int id) {
+        Asistencia asistencia = new Asistencia();
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Alumno> criteria = builder.createQuery(Alumno.class);
-            criteria.from(Sesion.class);
-            sesion = (Sesion) session.createCriteria(Sesion.class).add(Restrictions.eq("id", id)).list().get(0);
+            CriteriaQuery<Asistencia> criteria = builder.createQuery(Asistencia.class);
+            criteria.from(Asistencia.class);
+            asistencia = (Asistencia) session.createCriteria(Alumno.class).add(Restrictions.eq("id", id)).list().get(0);
             session.close();
         } catch (Exception e) {
         }
-        return sesion;
+        return asistencia;
     }
 
     @Override
-    public void save(Sesion sesion) {
+    public void save(Asistencia asistencia) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(sesion);
+            session.save(asistencia);
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo usuario");
+            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo asistencia");
         }
     }
 
     @Override
-    public void update(Sesion sesion) {
+    public void update(Asistencia asistencia) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(sesion);
+            session.update(asistencia);
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
@@ -81,17 +81,17 @@ public class SesionImplementacion implements ISesion {
 
     @Override
     public void delete(int id) {
-        Sesion sesion = new Sesion();
-        sesion.setId(id);
+        Asistencia asistencia = new Asistencia();
+        asistencia.setId(id);
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(sesion);
+            session.delete(asistencia);
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
             System.out.println("Ocurrió un error al intentar guardad el objeto de tipo usuario");
         }
     }
-
+    
 }

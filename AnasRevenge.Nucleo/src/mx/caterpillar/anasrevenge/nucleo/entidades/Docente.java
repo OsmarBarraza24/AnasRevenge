@@ -15,7 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import mx.caterpillar.anasrevenge.nucle.enumeradores.Sexo;
+import mx.caterpillar.anasrevenge.nucleo.enumeradores.Sexo;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 

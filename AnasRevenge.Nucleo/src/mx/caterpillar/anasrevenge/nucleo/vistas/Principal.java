@@ -10,19 +10,36 @@ import java.util.logging.Logger;
 import com.panamahitek.ArduinoException;
 import com.panamahitek.PanamaHitek_Arduino;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
+import mx.caterpillar.anasrevenge.nucleo.entidades.Alumno;
+import mx.caterpillar.anasrevenge.nucleo.entidades.Asistencia;
+import mx.caterpillar.anasrevenge.nucleo.entidades.Sesion;
+import mx.caterpillar.anasrevenge.nucleo.hilos.Hilo;
+import mx.caterpillar.anasrevenge.nucleo.implementacion.AlumnoImplementacion;
+import mx.caterpillar.anasrevenge.nucleo.implementacion.AsistenciaImplementacion;
+import mx.caterpillar.anasrevenge.nucleo.implementacion.SesionImplementacion;
+import mx.caterpillar.anasrevenge.nucleo.interfaces.IAlumno;
+import mx.caterpillar.anasrevenge.nucleo.interfaces.IAsistencia;
+import mx.caterpillar.anasrevenge.nucleo.interfaces.ISesion;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -34,24 +51,47 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     String uid = "";
+    File file = new File("nombre");
+    Sesion sesion = new Sesion();
+    IAlumno iAlumno = new AlumnoImplementacion();
+    Alumno alumno = new Alumno();
+    List<Sesion> sesiones;
+    int numeroShido = 0;
+    List<Asistencia> asistencias;
+    List<Asistencia> asistenciaNuevas = new ArrayList<Asistencia>();
+    Asistencia asistencia = new Asistencia();
+    IAsistencia iAsistencia = new AsistenciaImplementacion();
+    ISesion iSesion = new SesionImplementacion();
 
     PanamaHitek_Arduino arduino = new PanamaHitek_Arduino();
 
-    public Principal() throws ArduinoException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    public Principal() throws ArduinoException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, SerialPortException {
         initComponents();
         this.setLocationRelativeTo(null);
         UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
         SwingUtilities.updateComponentTreeUI(this);
+        arduino.arduinoRX("COM3", 9600, listener);
         this.pack();
     }
 
     SerialPortEventListener listener = new SerialPortEventListener() {
         public void serialEvent(SerialPortEvent spe) {
-           
+
             try {
                 if (arduino.isMessageAvailable()) {
-                    arduino.printMessage();
-
+                    uid = arduino.printMessage();
+                    alumno = iAlumno.getByUID(uid);
+                    asistencia.setAlumno(alumno);
+                    if (seconds < 600) {
+                        asistencia.setEstado(1);
+                    } else {
+                        asistencia.setEstado(2);
+                    }
+                    iAsistencia.save(asistencia);
+                    asistencias = iAsistencia.getAll();
+                    sesion.setAsistencias(asistencias.subList(numeroShido, asistencias.size()));
+                    iSesion.update(sesion);
+                    actualizarTabla();
                 }
 
             } catch (SerialPortException ex) {
@@ -76,7 +116,7 @@ public class Principal extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         btnMinimizar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        pnlFoto = new javax.swing.JPanel();
         lblNombreProfesor = new javax.swing.JLabel();
         lblMateria = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -125,6 +165,7 @@ public class Principal extends javax.swing.JFrame {
         btnMinimizar.setText("-");
         btnMinimizar.setBorderPainted(false);
         btnMinimizar.setContentAreaFilled(false);
+        btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMinimizar.setFocusPainted(false);
         btnMinimizar.setPreferredSize(new java.awt.Dimension(48, 45));
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -169,16 +210,16 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(250, 250));
+        pnlFoto.setPreferredSize(new java.awt.Dimension(250, 250));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlFotoLayout = new javax.swing.GroupLayout(pnlFoto);
+        pnlFoto.setLayout(pnlFotoLayout);
+        pnlFotoLayout.setHorizontalGroup(
+            pnlFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlFotoLayout.setVerticalGroup(
+            pnlFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
         );
 
@@ -208,7 +249,7 @@ public class Principal extends javax.swing.JFrame {
 
         pgrsBar.setBackground(new java.awt.Color(255, 255, 255));
         pgrsBar.setForeground(new java.awt.Color(75, 136, 162));
-        pgrsBar.setMaximum(30);
+        pgrsBar.setMaximum(600);
         pgrsBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(67, 146, 241)));
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
@@ -222,7 +263,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(pgrsBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlFoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblNombreProfesor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblMateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
@@ -236,7 +277,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNombreProfesor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -262,7 +303,25 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-
+        this.lblNombreProfesor.setText(Inicio.docentePrincipal.getNombre() + " " + Inicio.docentePrincipal.getApellidoPaterno() + " " + Inicio.docentePrincipal.getApellidoMaterno());
+        this.lblMateria.setText(Inicio.docentePrincipal.getLista().get(Inicio.i).getNombre());
+        try {
+            FileUtils.writeByteArrayToFile(file, Inicio.docentePrincipal.getFoto());
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Hilo hilo = new Hilo(this.pnlFoto, new ImageIcon(file.getPath()));
+        hilo.start();
+        sesion.setHoraEntrada(new Date());
+        sesion.setDocente(Inicio.docentePrincipal);
+        sesion.setClase(Inicio.docentePrincipal.getLista().get(Inicio.i));
+        iSesion.save(sesion);
+        sesiones = iSesion.getAll();
+        iSesion.update(sesion);
+        sesion = iSesion.getByID(sesiones.size());
+        asistencias = iAsistencia.getAll();
+        numeroShido = asistencias.size();
+        start();
     }//GEN-LAST:event_formComponentShown
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -289,6 +348,16 @@ public class Principal extends javax.swing.JFrame {
         this.btnMinimizar.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnMinimizarMouseExited
 
+    public void actualizarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
+        modelo.setRowCount(0);
+        for (Asistencia asis : sesion.getAsistencias()) {
+            modelo.addRow(new Object[]{asis.getAlumno().getNombre() + " " + asis.getAlumno().getApellidoPaterno() + " " + asis.getAlumno().getApellidoMaterno()});
+        }
+
+        this.jTable1.setModel(modelo);
+
+    }
     /**
      * @param args the command line arguments
      */
@@ -298,23 +367,20 @@ public class Principal extends javax.swing.JFrame {
         @Override
         public void run() {
             seconds++;
-            System.out.println("" + seconds);
-             pgrsBar.setValue(seconds);   
-             if (pgrsBar.getValue() == 5) {
+            pgrsBar.setValue(seconds);
+            if (pgrsBar.getValue() == 600) {
                 timer.cancel();
                 timer.purge();
-                 JOptionPane.showMessageDialog(null, "La clase ha acabado");
+                JOptionPane.showMessageDialog(null, "La clase ha acabado");
             }
         }
     };
 
     public void start() {
-       timer.scheduleAtFixedRate(task, 1000, 1000);
-       
+        timer.scheduleAtFixedRate(task, 1000, 1000);
+
     }
 
- 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -354,6 +420,8 @@ public class Principal extends javax.swing.JFrame {
                     Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SerialPortException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -364,12 +432,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblMateria;
     private javax.swing.JLabel lblNombreProfesor;
     private javax.swing.JProgressBar pgrsBar;
+    private javax.swing.JPanel pnlFoto;
     private javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
 }

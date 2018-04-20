@@ -8,7 +8,7 @@ package mx.caterpillar.anasrevenge.nucleo.entidades;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import mx.caterpillar.anasrevenge.nucle.enumeradores.Sexo;
+import mx.caterpillar.anasrevenge.nucleo.enumeradores.Sexo;
 
 /**
  *
@@ -22,7 +22,7 @@ public class Alumno {
     private String nombre;
     private int sexo;
     private String apellidoPaterno;
-    private String appellidoMaterno;
+    private String apellidoMaterno;
     private String grupo;
 
     /**
@@ -71,15 +71,15 @@ public class Alumno {
     /**
      * @return the appellidoMaterno
      */
-    public String getAppellidoMaterno() {
-        return appellidoMaterno;
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
     }
 
     /**
      * @param appellidoMaterno the appellidoMaterno to set
      */
-    public void setAppellidoMaterno(String appellidoMaterno) {
-        this.appellidoMaterno = appellidoMaterno;
+    public void setApellidoMaterno(String appellidoMaterno) {
+        this.apellidoMaterno = appellidoMaterno;
     }
 
     /**

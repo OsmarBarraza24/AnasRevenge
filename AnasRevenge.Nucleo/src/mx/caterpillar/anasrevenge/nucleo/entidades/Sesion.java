@@ -24,28 +24,27 @@ public class Sesion {
     /**
      * @return the alumnos
      */
-    @ManyToMany(cascade = { CascadeType.PERSIST })
+    @ManyToMany(cascade = { CascadeType.MERGE })
     @JoinTable(
-        name = "rel_sesion_alumno", 
-        joinColumns = { @JoinColumn(name = "idAlumno") }, 
-        inverseJoinColumns = { @JoinColumn(name = "idSesion") }
+        name = "rel_asistencia_sesion", 
+        joinColumns = { @JoinColumn(name = "idSesion") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idAsistencia") }
     )
-    public List<Alumno> getAlumnos() {
-        return alumnos;
+    public List<Asistencia> getAsistencias() {
+        return asistencia;
     }
 
     /**
      * @param alumnos the alumnos to set
      */
-    public void setAlumnos(List<Alumno> alumnos) {
-        this.alumnos = alumnos;
+    public void setAsistencias(List<Asistencia> asistencia) {
+        this.asistencia = asistencia;
     }
     private int id;
     private Date horaEntrada;
-    private Date horaSalida;
     private Docente docente;
     private Clase clase;
-    private List<Alumno> alumnos;
+    private List<Asistencia> asistencia;
 
     /**
      * @return the id
@@ -75,20 +74,6 @@ public class Sesion {
      */
     public void setHoraEntrada(Date horaEntrada) {
         this.horaEntrada = horaEntrada;
-    }
-
-    /**
-     * @return the horaSalida
-     */
-    public Date getHoraSalida() {
-        return horaSalida;
-    }
-
-    /**
-     * @param horaSalida the horaSalida to set
-     */
-    public void setHoraSalida(Date horaSalida) {
-        this.horaSalida = horaSalida;
     }
 
     /**
