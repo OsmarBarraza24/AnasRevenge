@@ -39,7 +39,7 @@ public class DocenteImplementacion implements IDocente{
 
     @Override
     public Docente getByUID(String uid) {
-        Docente docente = new Docente();
+        Docente docente = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -48,7 +48,6 @@ public class DocenteImplementacion implements IDocente{
             docente = (Docente)session.createCriteria(Docente.class).add(Restrictions.eq("uid", uid)).list().get(0);
             session.close();
         } catch (Exception e) {
-            System.out.println("Pendejo");
         }
         return docente;
     }

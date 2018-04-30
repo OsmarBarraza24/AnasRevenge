@@ -61,7 +61,7 @@ public class AlumnoImplementacion implements IAlumno {
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo usuario");
+            System.out.println("Ocurrió un error al intentar guardar el objeto de tipo alumno");
         }
     }
 
@@ -74,7 +74,7 @@ public class AlumnoImplementacion implements IAlumno {
             session.getTransaction().commit();
             session.close();
         } catch (Exception e) {
-            System.out.println("Ocurrió un error al intentar guardad el objeto de tipo usuario");
+            System.out.println("Ocurrió un error al intentar actualizar el objeto de tipo alumno");
         }
     }
 

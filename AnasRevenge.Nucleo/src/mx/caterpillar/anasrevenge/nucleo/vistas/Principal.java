@@ -325,7 +325,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        System.exit(0);
+        try {
+            arduino.killArduinoConnection();
+        } catch (ArduinoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Inicio inicio = null;
+        try {
+            inicio = new Inicio();
+        } catch (ArduinoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SerialPortException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        inicio.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseEntered

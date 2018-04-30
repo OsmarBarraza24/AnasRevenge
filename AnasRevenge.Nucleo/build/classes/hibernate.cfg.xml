@@ -12,13 +12,13 @@
             com.mysql.jdbc.Driver
         </property>
         <property name = "hibernate.connection.url">
-            jdbc:mysql://192.168.0.6/anasrevengedb
+            jdbc:mysql://localhost/anasrevengedb
         </property>
         <property name = "hibernate.connection.username">
             root
         </property>
         <property name = "hibernate.connection.password">
-           perron11
+           090200
         </property>
         <property name="hibernate.enable_lazy_load_no_trans">
             true        
